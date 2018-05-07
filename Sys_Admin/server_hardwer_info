@@ -1,0 +1,4 @@
+dmesg -H -T
+
+dmidecode | grep -i proliant
+dmidecode –type system | grep Manufacturer

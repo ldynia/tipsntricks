@@ -1,0 +1,69 @@
+https://devcenter.heroku.com/articles/ssl-certificate-self
+$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+$ openssl rsa -passin pass:x -in server.pass.key -out server.key
+$ rm server.pass.key
+$ openssl req -new -key server.key -out server.csr
+$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+
+# restart apache
+systemctl restart apache2
+
+# configure apache2 in systemctl
+vim /etc/sysconfig/apache2
+  APACHE_SERVER_FLAGS="SSL"
+  APACHE_SERVERADMIN="ludd@cbs.dtu.dk"
+  APACHE_SERVERNAME="compare"
+  APACHE_SERVERSIGNATURE="off"
+
+# Make that http deamon loads ssl
+vim /etc/apache2/httpd.conf
+  # Make sure SSL is always running
+  Define SSL
+
+# example of vi
+<VirtualHost *:80>
+    ServerName compare.cbs.dtu.dk
+    ServerAlias compare.cbs.dtu.dk
+
+    Redirect permanent / https://compare.cbs.dtu.dk/
+
+    DocumentRoot /srv/www/compare/htdocs
+    <Directory />
+            Options FollowSymLinks
+            AllowOverride None
+    </Directory>
+    <Directory /srv/www/compare/htdocs>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride None
+            Order allow,deny
+            allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName compare.cbs.dtu.dk
+    ServerAlias compare.cbs.dtu.dk
+    DocumentRoot /srv/www/compare/htdocs
+
+    ErrorLog /srv/www/compare/log/error.log
+    CustomLog /srv/www/compare/log/custom.log combined
+
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCertificateFile /etc/ssl/private/servercerts/STAR_cbs_dtu_dk.crt
+    SSLCertificateKeyFile /etc/ssl/private/servercerts/STAR_cbs_dtu_dk-private.nopass.key
+    SSLCertificateChainFile /etc/ssl/private/servercerts/STAR_cbs_dtu_dk.ca-bundle
+    SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+
+    <Directory />
+            Options FollowSymLinks
+            AllowOverride None
+    </Directory>
+    <Directory /srv/www/compare/htdocs>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride None
+            Order allow,deny
+            allow from all
+    </Directory>
+</VirtualHost>

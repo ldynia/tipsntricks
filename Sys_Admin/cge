@@ -1,0 +1,8 @@
+####################### cge -cbs ###################################
+
+#copy user template
+cp -rp /etc/skel /home/user_name
+
+# hardware info list
+hwinfo --short
+lspci | grep "RAID"

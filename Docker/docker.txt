@@ -1,0 +1,43 @@
+# Remove exited containers
+sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
+
+docker info
+
+sudo usermod -aG docker <username>
+
+docker build --force-rm -t test .
+docker build -t cbs/compare:webapp  docker/development
+
+# ssh into image
+docker run -it cbs/compare:webapp
+docker run -it -v /home/ludd/Coding/docker/compare:/var/www/compare/ backend
+
+# ssh into container
+docker exec -it <mycontainer> bash
+
+# remove image
+docker rmi -f test
+
+# remove containers
+docker rm $(docker ps -a | cut -d ' ' -f1)
+docker rmi $(docker images | grep none | awk '{print $3}')
+
+# login
+docker logs -f compare_webapp_run_3
+
+# DOCKER COMPOSE
+docker-compose rm --all
+
+docker-compose -f docker-compose-production.yml up -d
+
+docker-compose -f docker-compose-development.yml run -d webapp
+docker-compose -f docker-compose-development.yml up --build
+
+docker-compose -f docker-compose-development.yml run webapp
+
+1) docker-compose -f docker-compose-development.yml up -d --build webapp
+2) docker exec -it <container_id> bash
+
+1) docker-compose -f docker-compose-development.yml build
+2) docker-compose -f docker-compose-development.yml up --build
+1) docker-compose -f docker-compose-development.yml run webapp

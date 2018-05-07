@@ -1,0 +1,10 @@
+# display meory info in GB
+cat /proc/meminfo | awk '{print $1 "\t" $2/1024/1024 " GB"}'
+
+# actual memory used memory
+free -g | grep -e'-/+' | awk '{print "Memory: " $3 "/" $4 " GB [Used/Free]"}'
+
+# Loggin
+systemctl status apache2.service
+
+journalctl -xn

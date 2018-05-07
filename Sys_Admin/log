@@ -1,0 +1,5 @@
+tail -f /var/log/messages
+tail -f /var/log/audit/audit.log
+
+dmesg
+journalctl -xe

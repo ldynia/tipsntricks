@@ -1,0 +1,7 @@
+$ mongo
+> show dbs
+> use webshop_development
+> db.posts.insertOne({title: "hello", content: "Hello Mongo!"})
+> db.posts.find().pretty()
+> db.posts.find({title: {$eq: "hello"}}, {content:1})
+> db.posts.findOne().preaty()

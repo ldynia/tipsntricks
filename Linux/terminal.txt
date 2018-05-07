@@ -1,0 +1,135 @@
+
+# Copy (user profile) hiden files to home directory
+cp -r /etc/skel/. ~
+
+####################### FILES ###################################
+## GENERATE MD5 AND CONCATINATE IT WITH FILE NAME
+md5sum filename
+
+# Linux
+mkdir md5; md5sum * | awk '{system("cp "$2" md5/"$1"_"$2)} {print "Copied: "$2}'
+# Mac
+mkdir md5; md5 * | sed 's/MD5//g;s/(//g;s/)//g;s/ //g' | awk -F"=" '{system("cp "$1" md5/"$2"_"$1)} {print "Copied: "$1}'
+# Windows win-bash
+mkdir md5; md5sum * | sed 's/*//g' | awk '{system("cp "$2 " md5/"$1"_"$2)} {print "Copied: "$2}'
+
+# get file mime type
+file --mime-type -b Hit_in_genome_seq.fsa.gz
+
+# count number of lines in python files
+find . -name '*.py' -type f -exec wc -l {} +
+
+####################### EMAIL ###################################
+
+echo "test" | mail -r noreplay@cbs.dtu.dk -s "Test subject" ludd@cbs.dtu.dk
+
+# GENERATE EMPTY FILE
+truncate -s 10M output.file
+
+# content lenght
+stat --printf="%s\n" 250_mb.file
+
+# RUN SHELL SCRIPT IN BACKGROUND AS A DISOWNED PROCCESS
+http://linux.101hacks.com/unix/nohup-command/
+nohup sh backup.servers.two &
+. backup.servers.two & disown
+
+####################### VARIOUS ###################################
+
+# Exercise 12
+mkdir -p newtest/newtest/newtest   # Make three new directories
+mv file1 file2 filen destination_dir/
+
+####################### DU ###################################
+
+# GET TOTAL SIZE OF ALL DIRECTORIES EXCLUDING THOSE ONES
+sudo du -ch --exclude={data1,data2,data3,databases,projects} | grep total
+
+# cgebase
+sudo chmod -R g+r {agbr,alisyed,backup,balin,cisneros,databases,dhany,ea,gema,johah,juliavi,kagjo,lemvigh,louis,ludd,lund,mcft,metteb,neubert,oksana,phki,pile}
+
+#cgebase2
+sudo chmod -R g+r {alisyed,ammte,balin,cisneros,gema,ea,jkgm,johah,juliavi,julietwf,kaya,lemvigh,louis,ludd,lund,mcft,metteb,mniel,neubert,oksana,phki,pile,pmun,rkmo,roer,rosa,salvocos,tnp,torque,vanessa,www}
+
+####################### FIND ###################################
+
+# Find files that are older than 14 days
+find . -type f -mtime +14
+
+# Delete files younger than 1 day
+find . -type f -mtime +1 -delete
+
+# FIND ALL FILESE THAT BELONG TO CGEADM GROUP AND CHANGE MODE OF GROUP TO WRITE
+sudo find . -group cgeadm -exec chmod g+w {} \;
+
+# FIND BROKEN SYMLINK
+find -L . -type l
+find . -xtype l
+
+# xtype IS A TEST PERFORMED ON A DEREFERENCED LINK
+find . -xtype l | grep "Too many levels of symbolic links rsync"
+
+# FIND PATHS TO OF BROKEN LINKS
+find . -type l -! -exec test -e {} \; -print
+find /home -type d -not -name "databases" -not -name "projects" -not -name "data[1,2]" -exec chmod -R g+rx {} \;
+find /home -type d -not -name "databases" -not -name "projects" -not -name "data[3,4]" -exec chmod -R g+rx {} \;
+
+root@ludd-dell:~# find . -type d -not -name "database" -not -name "projects" -not -name "data[1,2]" -exec chmod 755 {} \;
+
+####################### GREP ###################################
+
+# SHOWS ALL NEGATIVE NUMBERS EG. -7.45264
+grep -E -o [-][0-9]+.[0-9]+ ex1.dat
+
+# DISPLAY BLOCK SIZE 1GB
+sudo du -csh --block-size=1G *
+
+# REPLACE STRING WITH ALL FILES THAT CONTAIN A SEARCHED STRING
+grep -lr "models.user_group_invites" core/ | xargs sed -i -e 's/models.user_group_invites/models.invitation/g'
+
+sed -i -e 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/g' /etc/ssh/ssh_config
+
+grep -lr "from app.api.serializers" app/api/views | xargs sed -i -e 's/from app.api.serializers/from app.models.serializers/g'
+grep -lr "from core." tests/ | xargs sed -i -e 's/from core./from app./g'
+
+grep -lr "from core.models.frontend_user.frontend_user" . | xargs sed -i -e 's/from core.models.frontend_user.frontend_user/from core.models.frontend_user/g'
+grep -lr "core.models.user_extended" . | xargs sed -i -e 's/core.models.user_extended/core.models.user_metadata/g'
+
+# GREP IDS FOR RSYNC PROCESS
+ps -aux | grep rsync | awk '{print $2}'
+
+# GREP IDS FOR RSYNC PROCESS AND KILL THEM ALL
+kill -9 ps -aux | grep rsync | egrep -v grep | awk '{print $2}'
+
+#RENAME EXTENSION OF FILES FORM scss to sass
+rename .scss .sass *.scss
+
+####################### ADMIN ###################################
+top
+netstat
+ifstat
+rsync
+
+####################### SSH KEY ###################################
+# SSH
+# GENEREATE KEY
+1) ludd@compare01:~/.ssh> ssh-keygen
+
+# ADD KEY FROM COMPARE01 TO CGEBASE2 - LOGIN WITHOUT PASSWORD
+2) ludd@compare01:~/.ssh> ssh-copy-id -i ludd@cgebase2.cbs.dtu.dk
+
+# LOGIN WITHOUT PASSWORD PROMPT
+3) ludd@compare01:~/.ssh> ssh ludd@cgebase2.cbs.dtu.dk
+
+# FIX BELOW Error
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+# Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+ssh-keygen -R hostname
+e.g: ssh-keygen -R interaction.cbs.dtu.dk
+
+####################### CURL ###################################
+# post data as a json
+curl -v -H "Content-Type: application/json" -X POST -d '{"username":"ldynia","password":"123123"}' http://compare.cbs/api/v1/user/login

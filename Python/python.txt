@@ -1,0 +1,59 @@
+# Benchamrking https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04
+wrk -t2 -c5 -d5s --timeout 2s http://compare.dev/app/api/v1/newsfeed
+
+
+# HOW TO BIND PACKAGED TO A SPECIFIC PYTHON VERSION
+python2   -m pip install SomePackage  # default Python 2
+python2.7 -m pip install SomePackage  # specifically Python 2.7
+python3   -m pip install SomePackage  # default Python 3
+python3.4 -m pip install SomePackage  # specifically Python 3.4
+
+
+import os
+from django.conf import settings
+
+# ACCESS  CLASS FIELDS WITHIN STATIC METHOD
+class Url():
+
+    def __init__(self, request):
+        Url.__request = request
+
+    @staticmethod
+    def generate_url(path):
+        print('REQUEST', dir(Url.__request))
+        # if settings.BASE_DIR in path:
+        #     path = path.replace(settings.BASE_DIR, '')
+        # print('path', path)
+
+################## PICKEL ##################
+
+# Save a dictionary into a pickle file.
+import pickle
+
+favorite_color = { "lion": "yellow", "kitty": "red" }
+
+pickle.dump( favorite_color, open( "save.p", "wb" ) )
+
+# Load the dictionary back from the pickle file.
+favorite_color = pickle.load( open( "save.p", "rb" ) )
+
+###########################################
+
+# get dictionary value by key
+getattr(object, object.key_name)
+getattr(metadata, 'latitude') -> getattr(f.metadata, field.name)
+
+#################### ASSERTION #######################
+
+try:
+    s = True
+    assert s is not True, "Something went wrong"
+except AssertionError as err:
+    print(err.args[0])
+
+
+# Timing
+import time
+start_time = time.time()
+main()
+print("--- %s seconds ---" % (time.time() - start_time))

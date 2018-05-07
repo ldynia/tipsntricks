@@ -1,0 +1,17 @@
+dmesg
+journalctl -xe
+
+systemctl status ypbind.service
+
+tail -f /var/log/secure
+tail -f /var/log/messages
+
+#SELinux
+tail -f /var/log/audit/audit.log
+
+# hardware info
+dmidecode > /tmp/dmidecode.txt
+/opt/hp/hpdiags/hpdiags -t > /tmp/hpdiags.txt
+
+hpsum --use_latest --silent --target <ip_address> --user <userid> --passwd <password>
+hpsum --use_latest --silent --target localhost --user 0 --passwd rootboy05
