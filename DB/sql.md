@@ -3,18 +3,6 @@ SELECT * FROM file_upload WHERE status !='complete'
 SELECT * FROM file_upload WHERE filename Like '%DTU2018-35-PRJ1138-staphylococcus-aureus-2008%'
 SELECT * FROM file_upload WHERE md5_checksum='ffb54d505373bdfb7b997d88b7536be0' OR md5_checksum='86f364673e1adb49db98ac13eb8d91f9'
 
---SELECT * FROM sample WHERE owner_id=29 AND second_file_id IS NULL
---SELECT * FROM sample WHERE name='17004057'
---SELECT * FROM file_upload WHERE md5_checksum='ffb54d505373bdfb7b997d88b7536be0' OR md5_checksum='86f364673e1adb49db98ac13eb8d91f9'
---SELECT * FROM file_upload WHERE filename LIKE '%18017163%'
-
-
------------------------
-
-# backup
-mysqldump -h cge -u cgeadmin -pQrpey10 --all-databases > all_databases_backup.sql
-
-
 SELECT * FROM file_upload
 LEFT JOIN file_upload_metadata
 ON file_upload.id=file_upload_metadata.file_upload_id
