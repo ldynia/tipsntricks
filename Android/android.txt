@@ -1,9 +1,0 @@
-
-# Uninstall packages
-adb devices
-adb shell
-pm --help
-pm list packages
-pm list packages | grep google
-pm list packages -d
-pm uninstall -k --user 0 <name of package>

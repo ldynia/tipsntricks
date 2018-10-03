@@ -1,15 +1,8 @@
-# test.py
+# Django
 
-from app.utilities.scrapper import Scrapper
+### Signals
 
-path = '/srv/www/compare/htdocs/storage/data/analysis/results/3c1582e7-86e7-4a6f-b50e-c7ad70c6bc3a/BAP'
-
-res = Scrapper.scrap(path)
-
-print('xxx', res)
-
-
-####################### Signals ###################################
+```python2
 import os
 import uuid
 from app.models.sample import Sample
@@ -33,57 +26,74 @@ def post_delete(sender, **kwargs):
         command = 'rm -rf ' + results_path
         os.system(command)
 
+```
 
 
-####################### Cellery ###################################
+### Cellery
+
+```python2
 # get the result of a task if I have the ID that points there?
 from app.tasks.analysis import run_pipeline
 task = run_pipeline.AsyncResult(task.id)
+```
 
-####################### CACHING ###################################
+
+### Caching
+```python2
 CACHE_KEY = 'user_' + str(request.user.id) + '_samples'
 files = cache.get(CACHE_KEY)
 if not files:
     files = FileUploadRepository().find_all_by(user=request.user, status='complete')
     cache.set(CACHE_KEY, files, TIME_IN_SECONDS['MINUTES'][1])
+```
 
-####################### DEPLOYMENT UWSGI ###################################
+### Deployment uwsgi
+```
 uwsgi --uid flag --enable-threads --socket app.sock --wsgi-file config/wsgi.py
 uwsgi --ini config/services/compare_uwsgi.ini
+```
 
-####################### UPLOAD ###################################
+### Upload
+```python2
 /usr/local/lib/python2.7/site-packages/django
 /var/lib/wwwrun/chunked_uploads
 
 sftp://vagrant@127.0.0.1:2222/var/lib/wwwrun/chunked_uploads
 sftp://vagrant@127.0.0.1:2222/usr/local/lib/python2.7/site-packages/django
+```
 
-####################### DATA DUMP ###################################
+### Data Dump
 
+```python2
 python manage.py dumpdata --all > db/test.json
 python manage.py loaddata database/dbdump.json
+```
 
+### Model interactions
 
-####################### MODEL ###################################
+```python2
 # save values to model
 model = UserGroupInviter(group_id=id, user_id=request.user.id, email=request.data['email'])
 invitation_is_saved = UserGroupInviterRrepository.save(model)
 
 # save dict to model
-m = MyModel(**data_dict)
-m = MyModel(extra='hello', **data_dict)
-m.save()
-
+model = MyModel(**data_dict)
+model = MyModel(extra='hello', **data_dict)
+model.save()
 
 Calling .save() will either create a new instance, or update an existing instance, depending on if an existing instance was passed when instantiating the serializer class:
+
 # .save() will create a new instance.
 serializer = CommentSerializer(data=data)
 
 # .save() will update the existing `comment` instance.
 serializer = CommentSerializer(comment, data=data)
+```
 
-###################### MODEL - Before Save ########################################
+### Model callbacks
 
+Before save
+```python2
 class FileUploadMetadata(models.Model):
 
   latitude = models.FloatField()
@@ -99,13 +109,17 @@ class FileUploadMetadata(models.Model):
 
       super(FileUploadMetadata, self).save(*args, **kwargs)
 
+```
+
+### Testing
+
+```python2
+$ python manage.py test tests.core.api.test_user_view
+```
 
 
-####################### TESTING ###################################
-
-$: python manage.py test tests.core.api.test_user_view
-
-
-###################### URL ########################################
+### URL
+```python2
 # build url to resource
 request.build_absolute_uri(META_DATA_OUTPUT_RELATIVE_PATH)
+```

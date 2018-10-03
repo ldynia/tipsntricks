@@ -1,3 +1,0 @@
-ansible-playbook -vvvv compare_setup.yml --user=ludd
-ansible-playbook -vvvv compare_setup.yml --ask-sudo-pass
-ansible-playbook -vvvv compare_setup.yml --ask-sudo-pass --user=ludd
