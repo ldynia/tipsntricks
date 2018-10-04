@@ -22,11 +22,13 @@ $ docker build --force-rm -t test .
 $ docker build -t cbs/compare:webapp  docker/development
 ```
 
-### Run image
+### Run image / container
 ```
+# run image
 $ docker run -it cbs/compare:webapp bash
 $ docker run -it -v /home/ludd/Coding/docker/compare:/var/www/compare/ backend
 
+# run container
 $ docker exec -it <mycontainer> bash
 ```
 

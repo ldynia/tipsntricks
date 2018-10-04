@@ -5,28 +5,6 @@ dsmc query backup /var -subdir=yes
 dsmc restore /srv/www/compare/production/ /tmp/xxx/ -subdir=yes -latest
 dsmc restore /etc/postfix/main.cf /tmp/xxx/ -latest
 
-HANS HENRIK MAIL
-#############
-
-You need to allow root access via this key (at least from console.cbs.dtu.dk) - Add it to /root/.ssh/authorized_keys
-ssh-dss AAAAB3NzaC1kc3MAAACBAJOSO/9PPL0xp8HMwnCPymyH/v0wKnWaT+DmQjoIlwm6WfBGGl9UMKoPEhKOo/c4I6BrUnNOx0febf5kFFlJM6n9rSpkfzhqhtAB0kYSNBLTd2hAxjHTMctj33NaUbRaRYeobfLp6kBVwbDtiJUozCHvmL/ZncLbF+hgCviFHbwVAAAAFQCJ7yLuyeDsJycOKu2cOKSnfo76OQAAAIBHz2rCykZMnh1GBc2oS449l3zByzecxyX+5OXNBcpG7GHFA6p5YLmk2n2UF78DLTPks17FNOvKr1Z/3WsRkrgxUM5BEd6XGUiEtNzIpw13W1yHbr4Kovk+ScxAHhqL/B/A0FPTpnULqirNT3E/7gw96T2/4Y859NjAC2mY52he0wAAAIAdCHCbM6RRm0jLPE2mn3T3b7XPc0TCoinjQdnNMwLqv5RajaGAWJxWkmwAYWxKbJ77FRfniwYVZ4sbJYsOvmXiAaEuH1IqCBuiKLS5wS+dOgbVVad/QxQwUKG4SyuA/wFFSRC9Atu+Jxqt4WlodFoXWsXWvSAqfc7dxZozygS7FA== root@console
-
-#############
-
-You need to create user and group 'nagios' where nagios default group is nagios.
-
-nagios home must be /usr/local/nagios
-useradd -d /usr/local/nagios nagios
-
-User nagios must be able to log in as nagios with this key (at least from centreon.cbs.dtu.dk)
-
-- Add it to /usr/local/nagios/.ssh/authorized_keys
-ssh-dss AAAAB3NzaC1kc3MAAACBAK/u5RAJM50l3OYaaqtnfVk9QAV2VHYW28wj5YywMgpay1tv/MVuDU9vYIjnwSZllontJqPl8utZOWJOYHaM/vTrhoQ79YtJ8Ui89T0NO8ZFnCp9o/zTg6Sq/dnU7ZHO/tsegfjutZ5KZ7CSFmUzio9UKYG3DhcEKvgMq66ZxzijAAAAFQCc97fj7qWbMboYNhy8FUnnECfpoQAAAIAAxLPjuKcNjRlP40K8bJj6Nohw2IvsGvR4f8LlGKnN8RT9ducMQVxoQqhbfg4aqJ15KYQioQmNH5xrwVuOiENJ3Pse90fBAR97N1Ro4+3WP/e6unkDWigvyo4fWuJWy4w6GQXeHZIGIP1wxiz4Jx4RYwL3KBCT6TObxaxqD7VeGAAAAIA5VzSCXt8q3TyV4UgD5gsbEd+08rtevXIu9nrz3yhu+Fz3peAQs+0A629U0dR8144wwQfB6uAAJG1ne2fR92x1WHAFi4SKD8M7BWem9QGBWgXDcLFQzGf5O7WicudAp/2U1o1GqlDQJpwy6DBi8V4k2mlNgSw5pdATsLpV1XTUmw== nagios@nagios
-
-System needs regular perl and c++ compilers.
-
-Tell me when the nagios user is ready, and I will push the monitoring plugins we use.
-
 #############
 
 You need to install the IBM Tivoli Storage Manager client on your centos machines.
@@ -63,6 +41,3 @@ With centos, it should be easier to make a script that monitors this for your HP
 This will allow you to do planned replacements of failing components instead of waiting full system crashes - which waits for no one.
 
 #############
-
-
---Hans-Henrik Stærfeldt

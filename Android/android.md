@@ -1,10 +1,17 @@
 # Uninstall packages
 
-https://developer.android.com/studio/command-line/adb
+### ADB
+Link to [
+Android Debug Bridge](https://developer.android.com/studio/command-line/adb)
 
 ```bash
 $ adb devices -l
 $ adb shell
+```
+
+### Package Manager
+```bash
+# package manager
 $ pm --help
 $ pm list packages
 
@@ -12,7 +19,9 @@ $ pm list packages
 $ pm list packages -d
 $ pm list packages -e
 
+# find all google packages
 $ pm list packages | grep google
-$ pm list packages -d
+
+# uninstall package
 $ pm uninstall -k --user 0 <name of package>
 ```

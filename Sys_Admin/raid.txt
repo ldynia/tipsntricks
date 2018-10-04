@@ -1,7 +1,0 @@
-# HP
-hpssacli ctrl all show status
-hpssacli ctrl all diag file=/var/log/ADUReport.zip
-hpssacli ctrl all show config
-
-# Suse
-supportconfig

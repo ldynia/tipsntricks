@@ -1,9 +1,12 @@
-Nginx
-setsebool -P httpd_can_network_connect 1
+# Nginx
 
 
----------------------------------------------------
-// Reverse Proxy app.conf
+```bash
+$ setsebool -P httpd_can_network_connect 1
+```
+
+```
+# Reverse Proxy /etc/nginx/conf.d/app.conf
 upstream some-app {
   server node2:5000;
 }
@@ -23,3 +26,4 @@ server {
     proxy_pass $scheme://some-app/;
   }
 }
+```

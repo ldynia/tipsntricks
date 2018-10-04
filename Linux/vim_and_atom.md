@@ -1,13 +1,11 @@
-#FIND REPLACE CONFIRM
-:%s/ludd/backup/gc
+# Atom
 
-############ ATOM ############
-
+```
 ctrl+shift+alt+p  - get file scope
 ctrl+shift+p+"markdow" - markdwon preview
+```
 
-
-############ ATOM KEYBINDINGS ############
+```
 'atom-text-editor:not([mini])':
   'ctrl-d': 'editor:delete-line'
 '.platform-win32 atom-text-editor, .platform-linux atom-text-editor':
@@ -22,3 +20,4 @@ ctrl+shift+p+"markdow" - markdwon preview
   'alt-shift-u': 'editor:lower-case'
   'shift-alt-left': 'window:focus-pane-on-left'
   'shift-alt-right': 'window:focus-pane-on-right'
+```

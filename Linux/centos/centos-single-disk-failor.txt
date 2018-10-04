@@ -8,7 +8,7 @@ Install Centos
 -Set up Networking
 -Partitioning
 --/sda1 /boot
---/sda2 /boot2
+--/sdb1 /boot2
 --/ -> lvm-raid1
 --swap -> lvm-raid1 128g
 

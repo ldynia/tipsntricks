@@ -1,3 +1,4 @@
+```bash
 # Restarting torq #1
 alisyed@cgebase:~> pbsnodes -a
 cgebase2:~ # /etc/init.d/pbs_mom status
@@ -16,3 +17,4 @@ sudo /etc/init.d/maui restart
 # kill stuber jobs
 sudo showq -r
 sudo ./scripts/bash/fix_torq.sh
+```

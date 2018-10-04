@@ -1,7 +1,7 @@
 # Postgres
 
 
-Database file location **/var/lib/postgresql/data**
+Database location **/var/lib/postgresql/data**
 
 
 ### Calculate total uploaded files
@@ -63,11 +63,12 @@ Python script for fixing keys after db import
 http://stackoverflow.com/questions/13670235/after-importing-data-in-postgresql-duplicate-key-value-violates-unique-constrai
 
 ```
+# database
 WITH mx AS (SELECT MAX(id) AS id FROM auth_user)
 SELECT setval('auth_user_id_seq', mx.id) AS curseq FROM mx;
 
 
-
+# django
 from django.contrib.auth.models import User
 for i in range(1,10):
     User(email='p407650@mvrht.com',password='123123', username='ziom').save()
