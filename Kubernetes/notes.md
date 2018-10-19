@@ -14,6 +14,10 @@ https://www.techrepublic.com/article/how-to-install-a-kubernetes-cluster-on-cent
 https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-1-10-cluster-using-kubeadm-on-centos-7
 
 
+https://itnext.io/kubernetes-on-ubuntu-on-virtualbox-60e8ce7c85ed
+
+https://medium.com/@KevinHoffman/building-a-kubernetes-cluster-in-virtualbox-with-ubuntu-22cd338846dd
+
 
 ```bash
 # check uuid
