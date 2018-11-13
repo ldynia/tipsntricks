@@ -14,11 +14,9 @@ VM](https://developers.caffeina.com/a-kubernetes-cluster-on-virtualbox-20d64666a
 
 [network](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
 
-[link](https://www.techrepublic.com/article/how-to-install-a-kubernetes-cluster-on-centos-7/
-)
+[link](https://www.techrepublic.com/article/how-to-install-a-kubernetes-cluster-on-centos-7/)
 
-[link](https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-1-10-cluster-using-kubeadm-on-centos-7
-)
+[link](https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-1-10-cluster-using-kubeadm-on-centos-7)
 
 [link](https://itnext.io/kubernetes-on-ubuntu-on-virtualbox-60e8ce7c85ed)
 
@@ -28,17 +26,12 @@ VM](https://developers.caffeina.com/a-kubernetes-cluster-on-virtualbox-20d64666a
 
 **Flannel** to work correctly, you must pass `--pod-network-cidr=10.244.0.0/16` to kubeadm init.
 
-
-
 ```bash
 # Set /proc/sys/net/bridge/bridge-nf-call-iptables to 1
 $ sysctl net.bridge.bridge-nf-call-iptables=1
 
 # Install network
 $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
-
-# Check if networking is working
-$ kubectl get pods --all-namespaces
 ```
 
 ### Start Kluster
@@ -67,4 +60,26 @@ $ kubctl get nodes
 ```bash
 $ kubeadm reset
 $ systemctl restart kubelet
+```
+
+### Create pod
+```bash
+$ kubectl get pods
+$ kubectl get pods --all-namespaces
+$ kubectl get pods --all-namespaces -o wide
+
+$ kubectl run -i --tty busybox2 --image=busybox --restart=Never -- sh
+$ kubectl exec -it busybox2 -- sh
+$ kubectl exec -it busybox2 -- nslookup httpd
+```
+
+### Deployments
+```bash
+$ kubectl get deployments --all-namespaces -o wide
+```
+
+
+### Port forwarding
+```bash
+$ kubectl port-forward -h
 ```
