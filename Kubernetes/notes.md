@@ -1,6 +1,7 @@
 # Kubernetes
 
 
+[kubernetesbyexample.com](http://kubernetesbyexample.com/)
 [playground](https://labs.play-with-k8s.com)
 
 [install kubeadm](https://kubernetes.io/docs/setup/independent/install-kubeadm/)
@@ -30,8 +31,15 @@ VM](https://developers.caffeina.com/a-kubernetes-cluster-on-virtualbox-20d64666a
 # Set /proc/sys/net/bridge/bridge-nf-call-iptables to 1
 $ sysctl net.bridge.bridge-nf-call-iptables=1
 
-# Install network
+# Install Flannel network -  You might run it as none root user
 $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+
+# For Kubernetes v1.7+
+$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+
+# Install Wave Net
+$ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 ```
 
 ### Start Kluster
@@ -41,10 +49,17 @@ $ sudo cat /sys/class/dmi/id/product_uuid
 ```
 
 ```bash
-# init and create join token
+# init and create join token for Flannel
 $ kubeadm init --apiserver-advertise-address=$(hostname -i) --pod-network-cidr=10.244.0.0/16
 
-# copy newly created config files
+# init and create join token for Wave Net
+$ kubeadm init --apiserver-advertise-address=$(hostname -i)
+
+# You might do this
+$ export KUBECONFIG=/etc/kubernetes/kubelet.conf
+$ kubectl get nodes
+
+# copy newly created config files as a non root user (normal user)
 $ mkdir -p $HOME/.kube
 $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -73,9 +88,17 @@ $ kubectl exec -it busybox2 -- sh
 $ kubectl exec -it busybox2 -- nslookup httpd
 ```
 
+### Access container within a pod
+```bash
+$ kubectl exec -it <PODNAME> -c <CONTAINER_NAME> -- bash
+```
+
 ### Deployments
 ```bash
 $ kubectl get deployments --all-namespaces -o wide
+$ kubectl scale --replicas=5 -f dep-nginx.yaml
+$ kubectl -n demo get deployments
+$ kubectl -n demo get rs
 ```
 
 
