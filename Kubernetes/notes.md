@@ -101,8 +101,32 @@ $ kubectl -n demo get deployments
 $ kubectl -n demo get rs
 ```
 
+### Ingress
+[Nginx Ingress Controller Instalation](https://kubernetes.github.io/ingress-nginx/deploy/)
 
-### Port forwarding
 ```bash
-$ kubectl port-forward -h
+# Mandatory step
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+# Download ingress service
+$ curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml > ingress-service-nodeport.yaml
+
+# Add externalIPs (nodes' IP's) to ingress-service-nodeport.yaml service specification
+spec:
+  externalIPs:
+  - 192.168.121.110
+  - 192.168.121.111
+  - 192.168.121.112
+  - 192.168.121.113
+  type: NodePort
+
+# Create service or apply for already deployed services
+$ kubectl create -f ingress-service-nodeport.yaml
+$ kubectl apply -f ingress-service-nodeport.yaml
+
+# Verify installation and version of the controller
+$ kubectl get svc --all-namespaces
+$ kubectl get deploy --all-namespaces
+$ kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx --watch
+$ kubectl exec -it <POD_NAME> -n ingress-nginx -- /nginx-ingress-controller --version
 ```
