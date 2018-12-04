@@ -102,31 +102,64 @@ $ kubectl -n demo get rs
 ```
 
 ### Ingress
-[Nginx Ingress Controller Instalation](https://kubernetes.github.io/ingress-nginx/deploy/)
+[Tutorial](https://medium.com/@Oskarr3/setting-up-ingress-on-minikube-6ae825e98f82)
+[Kubernetes !!!! Nginx Ingress Controller Instalation](https://github.com/kubernetes/ingress-nginx)
 
 ```bash
 # Mandatory step
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 
-# Download ingress service
-$ curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml > ingress-service-nodeport.yaml
+# Inspiration from minikube -check commented lines
+- /nginx-ingress-controller
+  #- --default-backend-service=$(POD_NAMESPACE)/default-http-backend
+  - --configmap=$(POD_NAMESPACE)/nginx-configuration
+  #- --configmap=$(POD_NAMESPACE)/nginx-load-balancer-conf
+  - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+  - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+  - --publish-service=$(POD_NAMESPACE)/ingress-nginx
+  - --annotations-prefix=nginx.ingress.kubernetes.io
+  #- --report-node-internal-ip-address
 
-# Add externalIPs (nodes' IP's) to ingress-service-nodeport.yaml service specification
+# Create load balancing service using LoadBalancer or NodePort svc-ingress-nginx-lb.yaml
+# link: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 spec:
+  #type: NodePort
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   externalIPs:
   - 192.168.121.110
   - 192.168.121.111
   - 192.168.121.112
   - 192.168.121.113
-  type: NodePort
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
+
 
 # Create service or apply for already deployed services
-$ kubectl create -f ingress-service-nodeport.yaml
-$ kubectl apply -f ingress-service-nodeport.yaml
+$ kubectl apply -f svc-ingress-nginx-lb.yaml
 
 # Verify installation and version of the controller
-$ kubectl get svc --all-namespaces
-$ kubectl get deploy --all-namespaces
-$ kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx --watch
+$ kubectl get svc -n ingress-nginx
+$ kubectl get deploy -n ingress-nginx
+$ kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx
 $ kubectl exec -it <POD_NAME> -n ingress-nginx -- /nginx-ingress-controller --version
+
+# Trubeleshooting
+$ kubectl describe nodes
 ```

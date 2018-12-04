@@ -12,9 +12,8 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - name: green-website
-        image: nginx
-        # image: aquamarine/kublr-tutorial-images:green
+      - name: green
+        image: aquamarine/kublr-tutorial-images:green
         resources:
           requests:
             cpu: 0.1
@@ -34,9 +33,8 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - name: blue-website
-        image: nginx
-        # image: aquamarine/kublr-tutorial-images:blue
+      - name: blue
+        image: aquamarine/kublr-tutorial-images:blue
         resources:
           requests:
             cpu: 0.1
