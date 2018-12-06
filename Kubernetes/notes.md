@@ -67,8 +67,11 @@ $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # reprint token
 $ kubeadm token create --print-join-command
 
-# display nodes
-$ kubctl get nodes
+# Validate if cluster is setup correctly
+$ kubectl version
+$ kubectl cluster-info
+$ kubectl get nodes
+$ kubectl get componentstatus
 ```
 
 ### Restart kubelet service
@@ -76,6 +79,21 @@ $ kubctl get nodes
 $ kubeadm reset
 $ systemctl restart kubelet
 ```
+
+### Dashboard
+
+```bash
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+$ kubectl get svc -n kube-system
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
+kube-dns               ClusterIP   10.96.0.10      <none>        53/UDP,53/TCP   33h
+kubernetes-dashboard   NodePort    10.101.11.169   <none>        80:31000/TCP    5m23
+
+$ curl 10.101.11.169
+$ curl $(hostname -i):31000
+```
+
 
 ### Create pod
 ```bash
