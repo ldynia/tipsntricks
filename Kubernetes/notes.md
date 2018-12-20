@@ -43,11 +43,89 @@ $ kubectl patch deploy metrics-server -p "$(cat k8s-metrics-server.patch.yaml)" 
 ```
 
 
-## Ingress
+## Ingress Traefik
+
+[user-guide](https://docs.traefik.io/user-guide/kubernetes/)
+
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/containous/traefik/master/examples/k8s/traefik-rbac.yaml
+```
+
+```yaml
+# traefik-ds.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+---
+kind: DaemonSet
+apiVersion: extensions/v1beta1
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb
+        name: traefik-ingress-lb
+    spec:
+      hostNetwork: true
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik
+        name: traefik-ingress-lb
+        ports:
+        - name: http
+          containerPort: 80
+        - name: admin
+          containerPort: 8080
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - NET_BIND_SERVICE
+        args:
+        - --api
+        - --kubernetes
+        - --logLevel=INFO
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 8080
+      name: admin
+```
+
+```bash
+# Create DaemonSet
+$ kubectl apply -f traefik-ds.yaml
+# $ kubectl apply -f https://raw.githubusercontent.com/containous/traefik/master/examples/k8s/traefik-deployment.yaml
+```
+
+## Ingress Nginx
 [Tutorial](https://medium.com/@Oskarr3/setting-up-ingress-on-minikube-6ae825e98f82)
 [Kubernetes !!!! Nginx Ingress Controller Instalation](https://github.com/kubernetes/ingress-nginx)
 
-**Installation**
+**Installation of nginx ingress controller**
 ```bash
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 ```
