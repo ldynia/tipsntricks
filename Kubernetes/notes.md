@@ -47,10 +47,12 @@ $ kubectl patch deploy metrics-server -p "$(cat k8s-metrics-server.patch.yaml)" 
 [Tutorial](https://medium.com/@Oskarr3/setting-up-ingress-on-minikube-6ae825e98f82)
 [Kubernetes !!!! Nginx Ingress Controller Instalation](https://github.com/kubernetes/ingress-nginx)
 
+**Installation**
 ```bash
-# Mandatory step
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+```
 
+```bash
 # Inspiration from minikube -check commented lines
 - /nginx-ingress-controller
   #- --default-backend-service=$(POD_NAMESPACE)/default-http-backend
@@ -61,8 +63,11 @@ $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/ma
   - --publish-service=$(POD_NAMESPACE)/ingress-nginx
   - --annotations-prefix=nginx.ingress.kubernetes.io
   #- --report-node-internal-ip-address
+```
 
-# Create load balancing service using LoadBalancer or NodePort svc-ingress-nginx-lb.yaml
+**Service Deployment**
+```yaml
+# svc-ingress-nginx-lb.yaml -Create load balancing service using LoadBalancer or NodePort
 # link: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
 kind: Service
 apiVersion: v1
@@ -91,8 +96,10 @@ spec:
     - name: https
       port: 443
       targetPort: https
+```
 
 
+```bash
 # Create service or apply for already deployed services
 $ kubectl apply -f svc-ingress-nginx-lb.yaml
 
