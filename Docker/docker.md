@@ -15,11 +15,20 @@ $ sudo usermod -aG docker <username>
 ```bash
 $ sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
 ```
+### bash_aliases
+```
+docker rmi -f $(docker images | grep none | awk '{ print $3 }')
+alias drn="docker rmi -f $(docker images | grep none | awk '{ print $3 }')"
+```
 
 ### Build
 ```
 $ docker build --force-rm -t test .
 $ docker build -t cbs/compare:webapp  docker/development
+
+$ docker build  --build-arg BUILD_DATE=$(date -u +'%d-%m-%YT%H:%M:%S') --build-arg GIT_COMMIT=0 --build-arg DEPLOYMENT_ENGINE=uwsgi --build-arg BUILD_BY=lukas --build-arg DEBUG=true -t ldynia/phenex-api:prod -f docker/Dockerfile.production .
+
+
 ```
 
 ### Run image / container
