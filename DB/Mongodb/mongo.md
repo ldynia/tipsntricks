@@ -19,3 +19,17 @@ $ mongo
 > db.posts.find({title: {$eq: "hello"}}, {content:1})
 > db.posts.findOne().preaty()
 ```
+
+#### Backup and mongorestore
+```bash
+mongoexport --db phenex_dev --collection backend_users --out db.json
+mongoimport --db phenex_dev --collection backend_users db.json
+
+mongodump --db phenex_dev --out /data/db/backup/fixtures
+mongorestore /data/db/backup/fixtures
+
+mongodump --db phenex_dev --out backup/db_`date +"%m-%d-%y"`
+# mongodump --gzip --db phenex_dev --out backup`date +"%m-%d-%y"`.backup
+mongodump --gzip --db phenex_dev --out db.backup
+mongorestore db.backup --gzip
+```

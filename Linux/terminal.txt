@@ -2,6 +2,10 @@
 # Copy (user profile) hiden files to home directory
 cp -r /etc/skel/. ~
 
+####################### SED ###################################
+# Comment line that contains 'searched_string'
+sed -e '/searched_string/ s/^#*/#/' -i /etc/apt/sources.list
+
 ####################### FILES ###################################
 ## GENERATE MD5 AND CONCATINATE IT WITH FILE NAME
 md5sum filename
