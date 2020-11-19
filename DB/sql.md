@@ -48,3 +48,41 @@ JOIN (
   SELECT * FROM file_upload
 ) AS T2
 ON T1.md5_checksum = T2.md5_checksum
+
+
+
+# Views - SQLite example
+
+CREATE TABLE "demo" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"first_name"	TEXT NOT NULL,
+	"last_name"	TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX idx_demo_id ON demo(id);
+CREATE INDEX idx_demo_last_name ON demo(last_name);
+
+INSERT INTO demo (first_name, last_name) VALUES ("lukasz", "dynowski");
+INSERT INTO demo (first_name, last_name) VALUES ("martin", "andersen");
+
+SELECT * FROM demo;
+
+CREATE VIEW view_demo_full_name AS
+SELECT 
+    id,
+    first_name || ' ' || last_name AS full_name
+FROM demo;
+  
+SELECT * FROM view_demo_full_name;
+
+SELECT demo.id, demo.first_name, demo.last_name, view_demo_full_name.full_name
+FROM demo
+INNER JOIN view_demo_full_name ON view_demo_full_name.id = demo.id
+ORDER BY view_demo_full_name.full_name DESC
+
+
+INSERT INTO demo (first_name, last_name) VALUES ("darth", "vader");
+
+SELECT * FROM demo;
+
+
