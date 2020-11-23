@@ -1,3 +1,7 @@
+
+# SQL 
+
+## Custom JOINS
 ```sql
 SELECT * FROM sample WHERE first_file_id='835537cd-1b3d-4c8d-881b-56dbb00d8d09'
 SELECT * FROM file_upload WHERE status !='complete'
@@ -53,7 +57,7 @@ ON T1.md5_checksum = T2.md5_checksum
 
 
 
-# Views - SQLite example
+## Views - SQLite example
 
 ```sql
 CREATE TABLE "demo" (
