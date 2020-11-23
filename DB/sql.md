@@ -1,3 +1,4 @@
+```sql
 SELECT * FROM sample WHERE first_file_id='835537cd-1b3d-4c8d-881b-56dbb00d8d09'
 SELECT * FROM file_upload WHERE status !='complete'
 SELECT * FROM file_upload WHERE filename Like '%DTU2018-35-PRJ1138-staphylococcus-aureus-2008%'
@@ -48,6 +49,7 @@ JOIN (
   SELECT * FROM file_upload
 ) AS T2
 ON T1.md5_checksum = T2.md5_checksum
+```
 
 
 
