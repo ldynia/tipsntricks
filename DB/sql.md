@@ -53,6 +53,7 @@ ON T1.md5_checksum = T2.md5_checksum
 
 # Views - SQLite example
 
+```sql
 CREATE TABLE "demo" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"first_name"	TEXT NOT NULL,
@@ -84,5 +85,5 @@ ORDER BY view_demo_full_name.full_name DESC
 INSERT INTO demo (first_name, last_name) VALUES ("darth", "vader");
 
 SELECT * FROM demo;
-
+```
 
