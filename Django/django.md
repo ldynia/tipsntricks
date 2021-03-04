@@ -2,7 +2,7 @@
 
 ### Signals
 
-```python2
+```python
 import os
 import uuid
 from app.models.sample import Sample
@@ -31,7 +31,7 @@ def post_delete(sender, **kwargs):
 
 ### Cellery
 
-```python2
+```python
 # get the result of a task if I have the ID that points there?
 from app.tasks.analysis import run_pipeline
 task = run_pipeline.AsyncResult(task.id)
@@ -39,7 +39,7 @@ task = run_pipeline.AsyncResult(task.id)
 
 
 ### Caching
-```python2
+```python
 CACHE_KEY = 'user_' + str(request.user.id) + '_samples'
 files = cache.get(CACHE_KEY)
 if not files:
@@ -54,7 +54,7 @@ uwsgi --ini config/services/compare_uwsgi.ini
 ```
 
 ### Upload
-```python2
+```python
 /usr/local/lib/python2.7/site-packages/django
 /var/lib/wwwrun/chunked_uploads
 
@@ -64,14 +64,14 @@ sftp://vagrant@127.0.0.1:2222/usr/local/lib/python2.7/site-packages/django
 
 ### Data Dump
 
-```python2
+```python
 python manage.py dumpdata --all > db/test.json
 python manage.py loaddata database/dbdump.json
 ```
 
 ### Model interactions
 
-```python2
+```python
 # save values to model
 model = UserGroupInviter(group_id=id, user_id=request.user.id, email=request.data['email'])
 invitation_is_saved = UserGroupInviterRrepository.save(model)
@@ -93,7 +93,7 @@ serializer = CommentSerializer(comment, data=data)
 ### Model callbacks
 
 Before save
-```python2
+```python
 class FileUploadMetadata(models.Model):
 
   latitude = models.FloatField()
@@ -113,13 +113,21 @@ class FileUploadMetadata(models.Model):
 
 ### Testing
 
-```python2
+```python
 $ python manage.py test tests.core.api.test_user_view
 ```
 
 
 ### URL
-```python2
+```python
 # build url to resource
 request.build_absolute_uri(META_DATA_OUTPUT_RELATIVE_PATH)
+```
+
+### ORM
+
+```python
+# # Bulk update dataset
+# Molecule.objects.filter(id__in=first_ds_mol_ids).update(dataset=first_ds.id)
+# Molecule.objects.filter(id__in=second_ds_mol_ids).update(dataset=second_ds.id)
 ```
