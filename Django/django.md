@@ -127,7 +127,12 @@ request.build_absolute_uri(META_DATA_OUTPUT_RELATIVE_PATH)
 ### ORM
 
 ```python
-# # Bulk update dataset
-# Molecule.objects.filter(id__in=first_ds_mol_ids).update(dataset=first_ds.id)
-# Molecule.objects.filter(id__in=second_ds_mol_ids).update(dataset=second_ds.id)
+# Bulk update dataset
+mol_ids = dataset.molecules.all().values_list('id', flat=True)
+
+first_ds_mol_ids = list(mol_ids[:SPLIT_INDEX])
+second_ds_mol_ids = list(mol_ids[SPLIT_INDEX:])
+
+Molecule.objects.filter(id__in=first_ds_mol_ids).update(dataset=first_ds.id)
+Molecule.objects.filter(id__in=second_ds_mol_ids).update(dataset=second_ds.id)
 ```
