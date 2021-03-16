@@ -136,3 +136,12 @@ second_ds_mol_ids = list(mol_ids[SPLIT_INDEX:])
 Molecule.objects.filter(id__in=first_ds_mol_ids).update(dataset=first_ds.id)
 Molecule.objects.filter(id__in=second_ds_mol_ids).update(dataset=second_ds.id)
 ```
+
+### Others
+
+New Django way for fetching User model.
+
+```python
+from django.contrib.auth import get_user_model
+some_user = get_user_model().objects.get(email='some@email.com')
+```
