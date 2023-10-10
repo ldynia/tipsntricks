@@ -1,0 +1,48 @@
+----------------------------------ERROR-------------------------------------
+GPT:disk_guids don't match.
+GPT:partition_entry_array_crc32 values don't match: 0x365d8afa != 0xab54d286
+GPT: Use GNU Parted to correct GPT errors.
+sdb: sdb1 sdb2 sdb3 sdb4 sdb5
+
+Tools:
+gdisk
+fdisk -l
+gparted
+-----------------------------------SOLUTION---------------------------------
+[root@compare03 centos]# gdisk /dev/sdb
+GPT fdisk (gdisk) version 0.8.6
+
+Warning! Main and backup partition tables differ! Use the 'c' and 'e' options
+on the recovery & transformation menu to examine the two tables.
+
+Warning! One or more CRCs don't match. You should repair the disk!
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: damaged
+
+****************************************************************************
+Caution: Found protective or hybrid MBR and corrupt GPT. Using GPT, but disk
+verification and recovery are STRONGLY recommended.
+****************************************************************************
+
+Command (? for help): v
+
+Caution: The CRC for the backup partition table is invalid. This table may
+be corrupt. This program will automatically create a new backup partition
+table when you save your partitions.
+
+Problem: main header's disk GUID (D6433B75-21B0-4777-B576-F742F5B4231E) doesn't
+match the backup GPT header's disk GUID (0556DE6B-E301-4983-A25E-77C8F09CC3D4)
+You should use the 'b' or 'd' option on the recovery & transformation menu to
+select one or the other header.
+
+Identified 2 problems!
+
+Command (? for help): r
+Command (? for help): d
+Command (? for help): w
+
+-------------------------------------------------------------------------------

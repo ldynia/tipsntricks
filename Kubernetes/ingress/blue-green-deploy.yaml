@@ -1,0 +1,41 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: green
+  namespace: default
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: green
+    spec:
+      hostNetwork: true
+      containers:
+      - name: green
+        image: aquamarine/kublr-tutorial-images:green
+        resources:
+          requests:
+            cpu: 0.1
+            memory: 200
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: blue
+  namespace: default
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: blue
+    spec:
+      hostNetwork: true
+      containers:
+      - name: blue
+        image: aquamarine/kublr-tutorial-images:blue
+        resources:
+          requests:
+            cpu: 0.1
+            memory: 200

@@ -1,0 +1,47 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: ubuntu-latest
+
+trigger:
+  - main
+  - release/*
+
+variables:
+  - name: Environment
+    ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+      value:  prod
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/releaes') }}:
+      value: staging
+
+stages:
+  - stage: Debug
+    displayName: Debug
+    jobs:
+      - job: Debug
+        displayName: Debug
+        steps:
+          - checkout: git://Data Lake/Tools
+          
+          - checkout: self
+            submodules: true
+            displayName: Initialize Git Repo
+          
+          - script: |
+              echo "Build source branch name: $(Build.SourceBranchName)"
+              echo "Build source branch: $(Build.SourceBranch)"
+              echo "Build.ArtifactStagingDirectory: $(Build.ArtifactStagingDirectory)"
+              echo "Build.BuildId: $(Build.BuildId)"
+              echo "Environment: $(Environment)"
+              echo "Pipeline.Workspace: $(Pipeline.Workspace)"
+              echo "System.DefaultWorkingDirector: $(System.DefaultWorkingDirectory)"
+              echo "System.DefinitionId: $(System.DefinitionId)"
+              echo "System.TeamProject: $(System.TeamProject)"
+              echo "System.TeamProjectId: $(System.TeamProjectId)"
+
+              echo "pwd: $(pwd)"
+              ls -l
+            displayName: Debug
