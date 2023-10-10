@@ -1,0 +1,55 @@
+Bios:
+-Dont create LVM in HP'S Dynamic Sotrate Array
+-Run boot in Legacy mode
+-Enable SATA AHCI Support in SATA  Controller Options
+
+Install Centos
+-Minimal version
+-Set up Networking
+-Partitioning
+--/sda1 /boot
+--/sdb1 /boot2
+--/ -> lvm-raid1
+--swap -> lvm-raid1 128g
+
+OS Level
+-copy boot to boot2 (sda1 to sdb1)
+--dd if=/dev/sda1 of=/dev/sdb1
+
+-change /boot mount in /etc/fstab. It should look like the one below make sure tha uuids are the same /dev/sda1 === /dev/sdb1 !!!
+# sudo blkid /dev/sda1
+# sudo blkid /dev/sdb1
+/dev/sdb1   /boot  ext4   defaults 0 0
+uuid-of-boot-partiotions(sda1 and sdb1) /boot  ext4   defaults 0 0
+-Comment /boot2 liente in /etc/fstab
+
+-Power of machine and unmout disk from bay1
+-boot from usb in rescue mode (get to shell) go to shell (press 3)
+-check if /dev/mapper devices are mounted
+-- cd /mnt/sysimage
+-- mount /dev/mapper/vg.cmp01-root /mnt/sysimage/
+-- mount /dev/sda1 /mnt/sysimage/boot
+-- mount -t proc porc porc/
+-- mount -t sysfs sys sys/
+-- mount -o bind /dev dev/
+-- chroot /mnt/sysimage
+-- grub2-install /dev/sda
+-unplug bootable usb
+-restart machine
+
+# Increas speed of RAID syncing
+https://www.cyberciti.biz/tips/linux-raid-increase-resync-rebuild-speed.html
+echo 50000 > /proc/sys/dev/raid/speed_limit_min
+
+# Fix RAID sync
+cat /proc/mdstat
+lsblk -a
+mdadm  --manage /dev/mapper/vg.compare01-root --add /dev/sda2
+
+# Mount lvs
+pvscan
+vgimport
+vgimport compare_data_vg1
+vgs
+lvs
+mount /dev/mapper/compare_data_vg1-compare_data_lv1 /home

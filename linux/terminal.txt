@@ -1,0 +1,78 @@
+
+# Copy (user profile) hiden files to home directory
+cp -r /etc/skel/. ~
+
+####################### FILES ###################################
+## GENERATE MD5 AND CONCATINATE IT WITH FILE NAME
+md5sum filename
+
+# Linux
+mkdir md5; md5sum * | awk '{system("cp "$2" md5/"$1"_"$2)} {print "Copied: "$2}'
+# Mac
+mkdir md5; md5 * | sed 's/MD5//g;s/(//g;s/)//g;s/ //g' | awk -F"=" '{system("cp "$1" md5/"$2"_"$1)} {print "Copied: "$1}'
+# Windows win-bash
+mkdir md5; md5sum * | sed 's/*//g' | awk '{system("cp "$2 " md5/"$1"_"$2)} {print "Copied: "$2}'
+
+# get file mime type
+file --mime-type -b Hit_in_genome_seq.fsa.gz
+
+# count number of lines in python files
+find . -name '*.py' -type f -exec wc -l {} +
+
+####################### EMAIL ###################################
+
+echo "test" | mail -r noreplay@cbs.dtu.dk -s "Test subject" ludd@cbs.dtu.dk
+
+# GENERATE EMPTY FILE
+truncate -s 10M output.file
+
+# content lenght
+stat --printf="%s\n" 250_mb.file
+
+# RUN SHELL SCRIPT IN BACKGROUND AS A DISOWNED PROCCESS
+http://linux.101hacks.com/unix/nohup-command/
+nohup sh backup.servers.two &
+. backup.servers.two & disown
+
+####################### VARIOUS ###################################
+
+# Exercise 12
+mkdir -p newtest/newtest/newtest   # Make three new directories
+mv file1 file2 filen destination_dir/
+
+####################### DU ###################################
+
+# GET TOTAL SIZE OF ALL DIRECTORIES EXCLUDING THOSE ONES
+sudo du -ch --exclude={data1,data2,data3,databases,projects} | grep total
+
+# cgebase
+sudo chmod -R g+r {agbr,alisyed,backup,balin,cisneros,databases,dhany,ea,gema,johah,juliavi,kagjo,lemvigh,louis,ludd,lund,mcft,metteb,neubert,oksana,phki,pile}
+
+#cgebase2
+sudo chmod -R g+r {alisyed,ammte,balin,cisneros,gema,ea,jkgm,johah,juliavi,julietwf,kaya,lemvigh,louis,ludd,lund,mcft,metteb,mniel,neubert,oksana,phki,pile,pmun,rkmo,roer,rosa,salvocos,tnp,torque,vanessa,www}
+
+####################### ADMIN ###################################
+top
+netstat
+ifstat
+rsync
+
+####################### SSH KEY ###################################
+# SSH
+# GENEREATE KEY
+1) ludd@compare01:~/.ssh> ssh-keygen
+
+# ADD KEY FROM COMPARE01 TO CGEBASE2 - LOGIN WITHOUT PASSWORD
+2) ludd@compare01:~/.ssh> ssh-copy-id -i ludd@cgebase2.cbs.dtu.dk
+
+# LOGIN WITHOUT PASSWORD PROMPT
+3) ludd@compare01:~/.ssh> ssh ludd@cgebase2.cbs.dtu.dk
+
+# FIX BELOW Error
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+# Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+ssh-keygen -R hostname
+e.g: ssh-keygen -R interaction.cbs.dtu.dk

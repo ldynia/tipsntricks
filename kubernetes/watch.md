@@ -1,0 +1,5 @@
+- https://kccnceu2023.sched.com/event/1Hyb5/prevent-embarrassing-cluster-takeovers-with-this-one-simple-trick-daniele-de-araujo-dos-santos-shane-lawrence-shopify?iframe=no&w=100%25&sidebar=yes&bg=no
+- https://kccnceu2023.sched.com/event/1Hybu/malicious-compliance-reflections-on-trusting-container-scanners-ian-coldwater-independent-duffie-cooley-isovalent-brad-geesaman-ghost-security-rory-mccune-datadog?iframe=no&w=100%&sidebar=yes&bg=no
+- https://kccnceu2023.sched.com/event/1HyX4/least-privilege-containers-keeping-a-bad-day-from-getting-worse-greg-castle-vinayak-goyal-google?iframe=no&w=100%25&sidebar=yes&bg=no
+- https://kccnceu2023.sched.com/event/1Hybc/hacking-and-defending-kubernetes-clusters-well-do-it-live-fabian-kammel-james-cleverley-prance-controlplane?iframe=no&w=100%25&sidebar=yes&bg=no
+- https://kccnceu2023.sched.com/event/1HyYW/the-hackers-guide-to-kubernetes-patrycja-wegrzynowicz-form3?iframe=no&w=100%25&sidebar=yes&bg=no
