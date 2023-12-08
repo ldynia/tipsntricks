@@ -93,5 +93,9 @@
       "key": "ctrl+/",
       "command": "-github.copilot.acceptCursorPanelSolution",
       "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "shift+c shift+c",
+      "command": "workbench.panel.chatSidebar"
     }
 ]
