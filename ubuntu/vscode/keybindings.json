@@ -95,7 +95,7 @@
       "when": "github.copilot.activated && github.copilot.panelVisible"
     },
     {
-      "key": "shift+c shift+c",
+      "key": "ctrl+shift+c",
       "command": "workbench.panel.chatSidebar"
     }
 ]
