@@ -1,0 +1,97 @@
+// Place your key bindings in this file to override the defaults
+// ~/.config/Code/User/keybindings.json
+[
+    {
+        "key": "ctrl+,",
+        "command": "editor.action.addSelectionToPreviousFindMatch"
+    },
+    {
+        "key": "alt+d",
+        "command": "editor.action.duplicateSelection"
+    },
+    {
+        "key": "ctrl+.",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+m",
+        "command": "editor.action.changeAll",
+        "when": "editorTextFocus && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+f2",
+        "command": "-editor.action.changeAll",
+        "when": "editorTextFocus && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+k",
+        "command": "-editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "editor.action.joinLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+      "key": "alt+]",
+      "command": "github.copilot.nextPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "alt+]",
+      "command": "-github.copilot.nextPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "alt+[",
+      "command": "github.copilot.previousPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "alt+[",
+      "command": "-github.copilot.previousPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "alt+\\",
+      "command": "editor.action.inlineSuggest.trigger",
+      "when": "config.github.copilot.inlineSuggest.enable && editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"
+    },
+    {
+      "key": "alt+\\",
+      "command": "-editor.action.inlineSuggest.trigger",
+      "when": "config.github.copilot.inlineSuggest.enable && editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"
+    },
+    {
+      "key": "alt+enter",
+      "command": "github.copilot.generate",
+      "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+    },
+    {
+      "key": "ctrl+enter",
+      "command": "-github.copilot.generate",
+      "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+    },
+    {
+      "key": "alt+/",
+      "command": "github.copilot.acceptCursorPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    },
+    {
+      "key": "ctrl+/",
+      "command": "-github.copilot.acceptCursorPanelSolution",
+      "when": "github.copilot.activated && github.copilot.panelVisible"
+    }
+]
