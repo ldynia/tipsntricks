@@ -9,7 +9,7 @@ ffmpeg's handy commands.
 ffmpeg -ss 2 -i input.mp4 -c copy input-trimmed.mp4
 
 # Removed at the end from 45 seconds
-ffmpeg -i http-1.1.mp4 -to 36 -c copy http-1.1-trimed.mp4
+ffmpeg -i input.mp4 -to 36 -c copy input-trimmed.mp4
 
 # Remove at the both ends to 4 seconds and from 63 seconds
 ffmpeg -i input.mp4 -ss 4 -to 35 -c copy input-trimmed.mp4
@@ -17,23 +17,23 @@ ffmpeg -i input.mp4 -ss 4 -to 35 -c copy input-trimmed.mp4
 # Remove in the middle from 68 to 70 seconds
 ffmpeg -i input.mp4 -filter_complex \
   "[0:v]split=2[part1][part2]; \
-  [part1]trim=end=68,setpts=PTS-STARTPTS[p1]; \
-  [part2]trim=start=70,setpts=PTS-STARTPTS[p2]; \
+  [part1]trim=end=83,setpts=PTS-STARTPTS[p1]; \
+  [part2]trim=start=83.5,setpts=PTS-STARTPTS[p2]; \
   [p1][p2]concat=n=2:v=1:a=0[v]" \
-  -map "[v]" -an -c:v libx264 output.mp4
+  -map "[v]" -an -c:v libx264 input-trimmed.mp4
 ```
 
 #### Play the middle section (from 15s to 200s) of the video x10 faster
 
 ```bash
 # Play middle portion of the video 10x faster
-ffmpeg -i http-3.mp4 -filter_complex \
+ffmpeg -i websocket-tls.mp4 -filter_complex \
   "[0:v]split=3[pre][mid][post]; \
-  [pre]trim=0:15,setpts=PTS-STARTPTS[pre]; \
-  [mid]trim=start=15:end=18,setpts=0.1*(PTS-STARTPTS)[mid]; \
-  [post]trim=start=18,setpts=PTS-STARTPTS[post]; \
+  [pre]trim=0:21,setpts=PTS-STARTPTS[pre]; \
+  [mid]trim=start=21:end=55,setpts=0.1*(PTS-STARTPTS)[mid]; \
+  [post]trim=start=55,setpts=PTS-STARTPTS[post]; \
   [pre][mid][post]concat=n=3:v=1:a=0[v]" \
-  -map "[v]" -an -c:v libx264 http-3-trimmed.mp4
+  -map "[v]" -an -c:v libx264 websocket-tls-trimmed.mp4
 ```
 
 #### Convert to GIF
