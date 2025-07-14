@@ -40,6 +40,9 @@ ffmpeg -i websocket-tls.mp4 -filter_complex \
 
 ```bash
 ffmpeg -i rest-crud.mp4 -filter_complex "fps=30,scale=1920:-1:flags=lanczos,split[o1][o2];[o1]palettegen[p];[o2]fifo[o3];[o3][p]paletteuse" rest-crud.gif
+
+ffmpeg -i rest-docs-timer.mp4 -vf "fps=10,scale=1920:-1:flags=lanczos,palettegen" palette.png
+ffmpeg -i rest-docs-timer.mp4 -i palette.png -filter_complex "fps=10,scale=1920:-1:flags=lanczos,format=rgb24[x];[x][1:v]paletteuse" rest-docs-timer.gif
 ```
 #### Add countdown timer
 
