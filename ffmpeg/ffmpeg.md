@@ -51,9 +51,9 @@ ffmpeg -i rest-docs-timer.mp4 -i palette.png -filter_complex "fps=10,scale=1920:
 DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 input.gif | grep -Po '^\d+')
 
 # Create GIF with remaining seconds countdown (one decimal place)
-ffmpeg -i input.gif -filter_complex \
-"[0:v]drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='%{expr\:trunc(($DURATION-t)*10)/10}':fontsize=24:fontcolor=white:x=(w-text_w)/2:y=h-th-10:box=1:boxcolor=black@0.5:boxborderw=5,split[s0][s1]; \
-[s0]palettegen[p]; \
-[s1][p]paletteuse" \
-input-timer.gif
+ffmpeg -i http-lab-setup.gif -filter_complex \
+      "[0:v]drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='$DURATION / %{expr\:trunc(($DURATION-t)*10)/10}':fontsize=24:fontcolor=white:x=(w-text_w)/2:y=h-th-10:box=1:boxcolor=black@0.5:boxborderw=5,split[s0][s1]; \
+      [s0]palettegen[p]; \
+      [s1][p]paletteuse" \
+      http-lab-setup-timer.gif
 ```
