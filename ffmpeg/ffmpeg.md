@@ -57,3 +57,20 @@ ffmpeg -i http-lab-setup.gif -filter_complex \
       [s1][p]paletteuse" \
       http-lab-setup-timer.gif
 ```
+
+#### Downsizing
+
+```
+ffmpeg -i rest-docs.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus rest-docs.webm
+ffmpeg -i rest-docs.webm -vf "fps=10,scale=1280:720" -y rest-docs.gif
+
+# First, get the duration of the input file
+DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 rest-docs.gif | grep -Po '^\d+')
+
+# Create GIF with remaining seconds countdown (one decimal place)
+ffmpeg -i rest-docs.gif -filter_complex \
+      "[0:v]drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='$DURATION / %{expr\:trunc(($DURATION-t)*10)/10}':fontsize=24:fontcolor=white:x=(w-text_w)/2:y=h-th-10:box=1:boxcolor=black@0.5:boxborderw=5,split[s0][s1]; \
+      [s0]palettegen[p]; \
+      [s1][p]paletteuse" \
+      rest-docs-timer.gif
+```
